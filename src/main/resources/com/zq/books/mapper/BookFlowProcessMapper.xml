@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.books.mapper.BookFlowProcessMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into `book_flow_process` (`book_id`,`user_id`,`book_owner_id`,`bookshelf_id`,`flow_id`,`create_time`)
+        values (#{bookId},#{userId},#{bookOwnerId},#{bookshelfId},#{flowId},now())
+    </insert>
+
+    <select id="getList" resultType="BookFlowProcessInfo">
+        select bfp.*, bf.name,bf.description from `book_flow_process` bfp left join `book_flow` bf
+        on bfp.flow_id = bf.id where bfp.book_owner_id = #{id}
+    </select>
+
+    <select id="findOne" resultType="BookFlowProcess">
+        select * from `book_flow_process` where id = #{id};
+    </select>
+
+    <update id="updateStatus" parameterType="BookFlowProcessInfo">
+        update `book_flow_process` set `flow_id` = #{flowId} where user_id = #{userId} and book_id = #{bookId}
+        and book_owner_id = #{bookOwnerId} and bookshelf_id = #{bookshelfId}
+    </update>
+
+    <select id="getFlowDetail" resultType="BookFlowProcessInfo">
+        select bfp.*, bf.name, bf.description from `book_flow_process` bfp
+        left join book_flow bf on bfp.flow_id = bf.id
+        left join bwhere bfp.`id` = #{id};
+    </select>
+</mapper>

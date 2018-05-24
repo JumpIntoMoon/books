@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.books.mapper.BookMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into book (douban_id, phone_no, isbn, title, summary, author_json, image, rating, publisher,
+        translator_json, price, author_intro, state, deposite, jhi_cost, return_period, city_name)
+        values (#{doubanId},#{phoneNo},#{isbn},#{title},#{summary},#{authorJson},#{image},#{rating},#{publisher},
+        #{translatorJson},#{price},#{authorIntro},#{state},#{deposite},#{jhiCost},#{returnPeriod},#{cityName})
+    </insert>
+
+    <select id="findOne" resultType="Book">
+        select * from book
+        <where>
+            <if test="bookId!=null">bookId=#{bookId}</if>
+        </where>
+    </select>
+
+    <select id="findOneByDoubanId" resultType="Book">
+        select * from book
+        <where>
+            <if test="doubanId!=null">douban_id=#{doubanId}</if>
+        </where>
+    </select>
+</mapper>

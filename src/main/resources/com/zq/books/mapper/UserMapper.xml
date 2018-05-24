@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.books.mapper.UserMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into user(name, phone, password) values (#{name},#{phone},#{password})
+    </insert>
+
+    <insert id="addWxRelation" useGeneratedKeys="true" keyProperty="id">
+        insert into user(open_id) values (#{openId})
+    </insert>
+
+    <insert id="addWxUser" useGeneratedKeys="true" keyProperty="id">
+        insert into wx_user(open_id) values (#{openId})
+    </insert>
+
+    <select id="findOne" resultType="User">
+        select * from user where bookId=#{bookId}
+    </select>
+
+    <select id="findOneWx" resultType="WXUser">
+        select * from wx_user where bookId=#{bookId}
+    </select>
+
+    <select id="findByOpenId" resultType="User">
+        select * from user where open_id = #{openId}
+    </select>
+
+    <select id="findByName" resultType="User">
+        select * from user where name=#{name}
+    </select>
+
+    <select id="findWxByOpenId" resultType="WXUser">
+        select * from wx_user where open_id=#{openId}
+    </select>
+</mapper>
